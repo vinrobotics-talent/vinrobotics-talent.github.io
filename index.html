@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Physical Intelligence for Robotics — VinRobotics Talent Program</title>
+  <meta name="description" content="Physical Intelligence for Robotics: Connecting Physics‑Informed ML to Embodiment — a talent program and student team at VinRobotics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{ --ring: 255 255 255; }
+    html,body{ font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+    .glass { backdrop-filter: blur(10px); background: rgba(255,255,255,0.75); box-shadow: 0 10px 30px rgba(2,6,23,0.06);} 
+    .grad { background: radial-gradient(80% 60% at 50% 0%, rgba(56,189,248,0.25), rgba(99,102,241,0.15) 40%, rgba(0,0,0,0) 70%); }
+    /* Background polish: gradient mesh + subtle grid + noise overlay */
+    .bg-mesh {
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(99,102,241,.35), transparent 60%),
+                  radial-gradient(1000px 500px at 90% 0%, rgba(56,189,248,.30), transparent 60%),
+                  radial-gradient(800px 400px at 50% 20%, rgba(34,197,94,.18), transparent 60%);
+    }
+    .bg-grid { background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px); background-size: 24px 24px; mask-image: radial-gradient(circle at 50% 0%, black, transparent 70%);} 
+    .noise:before{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.03; mix-blend:multiply; background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAuMB7b0HVgAAAABJRU5ErkJggg=='); }
+    .avatar { aspect-ratio:1/1; object-fit:cover; }
+    /* Replace Tailwind @apply with plain CSS so it works without a build step */
+    .chip { display:inline-flex; align-items:center; gap:0.375rem; border-radius:9999px; border:1px solid rgba(15,23,42,0.12); padding:0.25rem 0.625rem; font-size:0.75rem; color:#334155; background:#fff; }
+    .chip:hover { background:#f8fafc; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 selection:bg-indigo-200">
+  <!-- Hero -->
+  <header class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-mesh"></div>
+    <div class="absolute inset-0 bg-grid"></div>
+    <div class="absolute inset-0 noise"></div>
+    <div class="mx-auto max-w-7xl px-6 pb-20 pt-16 lg:pt-24 relative">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="inline-flex items-center gap-2 rounded-full border border-indigo-400/30 px-3 py-1 text-xs font-medium text-indigo-700/90 bg-indigo-50">New team • Student talent program</p>
+          <h1 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Physical Intelligence for Robotics
+          </h1>
+          <p class="mt-3 max-w-3xl text-lg text-slate-700">Connecting <span class="font-semibold text-indigo-700">Physics‑Informed ML</span> to <span class="font-semibold text-indigo-700">Embodiment</span> — where theory meets practice and <em>equations turn into motion</em>.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="#apply" class="group inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 font-semibold text-white shadow-lg shadow-indigo-500/20 ring-1 ring-black/5 hover:bg-indigo-500">Apply now <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 transition-transform group-hover:translate-x-0.5"><path d="M13.5 4.5L21 12l-7.5 7.5m7.5-7.5H3"/></svg></a>
+            <a href="#tracks" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 font-semibold hover:bg-white">Explore tracks</a>
+            <a href="#mentors" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 font-semibold hover:bg-white">Meet the mentors</a>
+          </div>
+        </div>
+        <div class="glass rounded-2xl border border-slate-200 p-5 shadow-2xl lg:max-w-md">
+          <p class="text-sm text-slate-600">Led by</p>
+          <ul class="mt-2 space-y-1 text-sm">
+            <li><span class="font-semibold text-slate-900">Dr. Vu Nhat Minh</span> — Robotic Manipulation</li>
+            <li><span class="font-semibold text-slate-900">Dr. Nguyen Dinh Huan</span> — SLAM & Autonomy</li>
+            <li><span class="font-semibold text-slate-900">Mr. Nguyen Manh Cuong</span> — Robotics Control</li>
+          </ul>
+          <p class="mt-4 text-sm text-slate-600">Senior collaborators</p>
+          <ul class="mt-2 space-y-1 text-sm">
+            <li><span class="font-semibold text-slate-900">Dr. Nguyen Xuan Ha</span> — Planning & Control</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Media: VinRobotics video/GIF -->
+  <section id="hero-media" class="mx-auto max-w-6xl px-6 -mt-10">
+    <div class="aspect-video overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <!-- Replace the YouTube ID with another if you prefer -->
+      <iframe class="h-full w-full" src="https://www.youtube.com/embed/6028Vm7cVcQ" title="VinRobotics — Hands-on demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p class="mt-2 text-xs text-slate-500">Featured clip. You can swap the video by editing the YouTube ID in the iframe <code>src</code>.</p>
+  </section>
+
+  <!-- What we build -->
+  <section id="work" class="mx-auto max-w-7xl px-6 py-14">
+    <h2 class="text-2xl font-bold">What we build every day</h2>
+    <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <article class="glass rounded-2xl border border-slate-200 p-5">
+        <h3 class="font-semibold">Dance with Balance</h3>
+        <p class="mt-2 text-sm text-slate-600">Humanoids walk, run, and balance with human‑like agility — even on uneven terrain or carrying loads.</p>
+      </article>
+      <article class="glass rounded-2xl border border-slate-200 p-5">
+        <h3 class="font-semibold">Hands of Precision</h3>
+        <p class="mt-2 text-sm text-slate-600">Arms and grippers manipulate safely and efficiently, performing tasks with finesse and reliability.</p>
+      </article>
+      <article class="glass rounded-2xl border border-slate-200 p-5">
+        <h3 class="font-semibold">From Virtual to Reality</h3>
+        <p class="mt-2 text-sm text-slate-600">Control strategies are perfected in high‑fidelity simulation before taking the leap to real robots.</p>
+      </article>
+      <article class="glass rounded-2xl border border-slate-200 p-5">
+        <h3 class="font-semibold">Challenge the Humanoids</h3>
+        <p class="mt-2 text-sm text-slate-600">Robots tackle dynamic, real‑world tasks that push their limits and show the future of human‑like motion.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Tracks -->
+  <section id="tracks" class="mx-auto max-w-7xl px-6 py-14">
+    <h2 class="text-2xl font-bold">Choose your track</h2>
+    <p class="mt-2 max-w-3xl text-slate-600">Pick one focus area — or blend them. You’ll ship real features on real robots, mentored by experts.</p>
+    <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="text-lg font-semibold">Dynamics & Whole‑Body Control</h3>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600">
+          <li>Model‑based controllers (MPC, QP‑WBC), identification & calibration</li>
+          <li>Adaptive/robust control, torque‑level interfaces</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="text-lg font-semibold">Perception, SLAM & Mapping</h3>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600">
+          <li>LiDAR/Visual SLAM in dynamic & large‑scale spaces</li>
+          <li>State estimation, sensor fusion, calibration</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="text-lg font-semibold">Planning & Autonomy</h3>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600">
+          <li>Search / sampling / optimization‑based planning</li>
+          <li>Tracking control and behavior trees for loco‑manipulation</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="text-lg font-semibold">Embodied ML</h3>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600">
+          <li>Physics‑informed ML, RL/IL, VLA for perception‑to‑action</li>
+          <li>Sim2real, representation learning, policy optimization</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="text-lg font-semibold">Systems & Tooling</h3>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600">
+          <li>Realtime C++/CUDA on embedded hardware</li>
+          <li>Dev infra, benchmarking, safety & testing</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="text-lg font-semibold">Human‑Robot Demos</h3>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600">
+          <li>End‑to‑end demos for exhibitions & pilots</li>
+          <li>Visualization, telemetry, fleet tools</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news" class="mx-auto max-w-7xl px-6 py-14">
+    <div class="flex items-end justify-between gap-4">
+      <h2 class="text-2xl font-bold">News</h2>
+      <a href="#" class="text-sm text-indigo-700 hover:underline" aria-label="View all news">View all</a>
+    </div>
+    <div class="mt-6 grid gap-6 md:grid-cols-2">
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-xs uppercase tracking-wide text-slate-500">Events</p>
+        <h3 class="mt-1 text-lg font-semibold">VinRobotics at AI4VN 2025</h3>
+        <p class="mt-2 text-sm text-slate-600">Highlights from our showcase on mastering core robotics technologies in Vietnam.</p>
+        <div class="mt-3 text-sm">
+          <a href="#" target="_blank" rel="noopener" class="text-indigo-700 hover:underline">Read post →</a>
+        </div>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-xs uppercase tracking-wide text-slate-500">Press</p>
+        <h3 class="mt-1 text-lg font-semibold">Hands-on with VinRobotics’ Humanoid Robot</h3>
+        <p class="mt-2 text-sm text-slate-600">Third‑gen prototype field notes and capabilities overview.</p>
+        <div class="mt-3 text-sm">
+          <a href="#" target="_blank" rel="noopener" class="text-indigo-700 hover:underline">Read post →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Mentors -->
+  <section id="mentors" class="mx-auto max-w-7xl px-6 py-14">
+    <h2 class="text-2xl font-bold">Mentors & Senior Collaborators</h2>
+    <p class="mt-2 max-w-3xl text-slate-600">You’ll be supported by an experienced, hands‑on crew from academia and industry.</p>
+
+    <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <article class="rounded-2xl border border-slate-200 p-6 bg-white">
+        <div class="flex items-start gap-4">
+          <img src="assets/img/mentors/vu-nhat-minh.jpg" alt="Vu Nhat Minh" class="avatar h-16 w-16 rounded-xl border border-slate-200">
+          <div>
+            <h3 class="font-semibold">Dr. Vu Nhat Minh</h3>
+            <p class="text-sm text-slate-600">Lead • Robotic Manipulation</p>
+            <p class="mt-1 text-xs text-slate-500">PhD in Robotics — TU Wien</p>
+            <div class="mt-2 flex flex-wrap gap-2 text-xs">
+              <a class="chip" href="#" target="_blank" rel="noopener">Website</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">Google Scholar</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="rounded-2xl border border-slate-200 p-6 bg-white">
+        <div class="flex items-start gap-4">
+          <img src="assets/img/mentors/nguyen-dinh-huan.jpg" alt="Nguyen Dinh Huan" class="avatar h-16 w-16 rounded-xl border border-slate-200">
+          <div>
+            <h3 class="font-semibold">Dr. Nguyen Dinh Huan</h3>
+            <p class="text-sm text-slate-600">Lead • SLAM & Autonomy</p>
+            <p class="mt-1 text-xs text-slate-500">PhD in Autonomous Systems — [Affiliation]</p>
+            <div class="mt-2 flex flex-wrap gap-2 text-xs">
+              <a class="chip" href="#" target="_blank" rel="noopener">Website</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">Google Scholar</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="rounded-2xl border border-slate-200 p-6 bg-white">
+        <div class="flex items-start gap-4">
+          <img src="assets/img/mentors/nguyen-manh-cuong.jpg" alt="Nguyen Manh Cuong" class="avatar h-16 w-16 rounded-xl border border-slate-200">
+          <div>
+            <h3 class="font-semibold">Mr. Nguyen Manh Cuong</h3>
+            <p class="text-sm text-slate-600">Lead • Robotics Control</p>
+            <p class="mt-1 text-xs text-slate-500">MSc in Control Engineering — [Affiliation]</p>
+            <div class="mt-2 flex flex-wrap gap-2 text-xs">
+              <a class="chip" href="#" target="_blank" rel="noopener">Website</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">Google Scholar</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="rounded-2xl border border-slate-200 p-6 bg-white">
+        <div class="flex items-start gap-4">
+          <img src="assets/img/mentors/nguyen-xuan-ha.jpg" alt="Nguyen Xuan Ha" class="avatar h-16 w-16 rounded-xl border border-slate-200">
+          <div>
+            <h3 class="font-semibold">Dr. Nguyen Xuan Ha</h3>
+            <p class="text-sm text-slate-600">Senior Collaborator • Planning & Control</p>
+            <p class="mt-1 text-xs text-slate-500">PhD in Robotics — SKKU, South Korea</p>
+            <div class="mt-2 flex flex-wrap gap-2 text-xs">
+              <a class="chip" href="#" target="_blank" rel="noopener">Website</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">Google Scholar</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="rounded-2xl border border-slate-200 p-6 bg-white">
+        <div class="flex items-start gap-4">
+          <img src="assets/img/mentors/anh-nguyen.jpg" alt="Anh Nguyen" class="avatar h-16 w-16 rounded-xl border border-slate-200">
+          <div>
+            <h3 class="font-semibold">Anh Nguyen</h3>
+            <p class="text-sm text-slate-600">External Mentor • AI — University of Liverpool</p>
+            <p class="mt-1 text-xs text-slate-500">PhD in Computer Science — [Institution]</p>
+            <div class="mt-2 flex flex-wrap gap-2 text-xs">
+              <a class="chip" href="#" target="_blank" rel="noopener">Website</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">Google Scholar</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="rounded-2xl border border-slate-200 p-6 bg-white">
+        <div class="flex items-start gap-4">
+          <img src="assets/img/mentors/han-nguyen.jpg" alt="Han Nguyen" class="avatar h-16 w-16 rounded-xl border border-slate-200">
+          <div>
+            <h3 class="font-semibold">Han Nguyen</h3>
+            <p class="text-sm text-slate-600">External Mentor • UAV — RMIT University</p>
+            <p class="mt-1 text-xs text-slate-500">PhD in Aerospace/Robotics — [Institution]</p>
+            <div class="mt-2 flex flex-wrap gap-2 text-xs">
+              <a class="chip" href="#" target="_blank" rel="noopener">Website</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">Google Scholar</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="rounded-2xl border border-slate-200 p-6 bg-white">
+        <div class="flex items-start gap-4">
+          <img src="assets/img/mentors/thien-minh.jpg" alt="Thien Minh" class="avatar h-16 w-16 rounded-xl border border-slate-200">
+          <div>
+            <h3 class="font-semibold">Thien Minh</h3>
+            <p class="text-sm text-slate-600">External Mentor • SLAM — University of Sydney</p>
+            <p class="mt-1 text-xs text-slate-500">PhD in Robotics/Perception — [Institution]</p>
+            <div class="mt-2 flex flex-wrap gap-2 text-xs">
+              <a class="chip" href="#" target="_blank" rel="noopener">Website</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">Google Scholar</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="mt-8 rounded-xl border border-slate-200 p-4 text-xs text-slate-500">
+      <p><span class="font-semibold text-slate-600">Photo guide:</span> add 400×400 jpg/png headshots to <code>assets/img/mentors/</code> and match the filenames used above. Square crops look best.</p>
+    </div>
+  </section>
+
+  <!-- What we're working on (from Autonomy team) -->
+  <section class="mx-auto max-w-7xl px-6 py-14">
+    <h2 class="text-2xl font-bold">What we’re working on</h2>
+    <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">Sensor Fusion & Estimation</h3>
+        <p class="mt-2 text-sm text-slate-600">Sync & calibrate LiDAR, cameras, IMU, encoders; Kalman filters; pose‑graph optimization; modality reliability detection.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">SLAM in the Wild</h3>
+        <p class="mt-2 text-sm text-slate-600">LiDAR/Visual SLAM for dynamic, large‑scale environments.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">Mapping</h3>
+        <p class="mt-2 text-sm text-slate-600">Efficient map representations for navigation in cluttered spaces.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">Planning & Tracking Control</h3>
+        <p class="mt-2 text-sm text-slate-600">Classical & learning‑based planners; robust tracking on hardware.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">Code Performance</h3>
+        <p class="mt-2 text-sm text-slate-600">Clean C++/CUDA for realtime on embedded targets.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">System Integration</h3>
+        <p class="mt-2 text-sm text-slate-600">Behavior trees to coordinate locomotion, navigation & manipulation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects (placeholder) -->
+  <section id="projects" class="mx-auto max-w-7xl px-6 py-14">
+    <h2 class="text-2xl font-bold">Projects</h2>
+    <p class="mt-2 text-slate-600">Coming soon — we’ll list open‑source repos and demo write‑ups here.</p>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <!-- Leave empty for now / add cards later -->
+    </div>
+  </section>
+
+  <!-- Growth -->
+  <section id="growth" class="mx-auto max-w-7xl px-6 py-14">
+    <div class="grid gap-6 lg:grid-cols-2">
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h2 class="text-2xl font-bold">Growth path</h2>
+        <ul class="mt-3 space-y-2 text-slate-600">
+          <li><span class="font-semibold text-slate-900">Intern → Innovator:</span> contribute to ongoing projects, master core control & robotics techniques.</li>
+          <li><span class="font-semibold text-slate-900">Expand Expertise:</span> whole‑body control, motion planning, realtime integration.</li>
+          <li><span class="font-semibold text-slate-900">Lead Projects:</span> design & run your own experiments and applications.</li>
+          <li><span class="font-semibold text-slate-900">Shape the Future:</span> build a portfolio for top research/industry roles.</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h2 class="text-2xl font-bold">What you’ll gain</h2>
+        <ul class="mt-3 space-y-2 text-slate-600">
+          <li>Direct mentorship from experts and senior researchers.</li>
+          <li>Hands‑on work: make the robot move — from sim to hardware.</li>
+          <li>Deep dives into WBC, MPC, adaptive control & more.</li>
+          <li>A rock‑solid foundation for humanoid robotics careers.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who we’re looking for -->
+  <section id="who" class="mx-auto max-w-7xl px-6 py-14">
+    <h2 class="text-2xl font-bold">Who we’re looking for</h2>
+    <div class="mt-6 grid gap-5 md:grid-cols-2">
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">You might be a fit if you…</h3>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600">
+          <li>Understand kinematics, dynamics, control & optimization basics</li>
+          <li>Can code in C++/Python/MATLAB for algorithms</li>
+          <li>Are analytical, detail‑oriented, and collaborative</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">Bonus points</h3>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600">
+          <li>Built optimization‑based controllers</li>
+          <li>Realtime or physical robot experience</li>
+          <li>State estimation, identification, or adaptive control</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to apply -->
+  <section id="apply" class="mx-auto max-w-7xl px-6 py-14">
+    <div class="glass rounded-2xl border border-slate-200 p-8">
+      <h2 class="text-2xl font-bold">How to apply</h2>
+      <p class="mt-2 text-slate-600">We accept rolling applications for semester projects, internships, and thesis placements.</p>
+      <ol class="mt-4 list-decimal pl-6 text-slate-600">
+        <li>Prepare a short CV and links (GitHub, portfolio, papers).</li>
+        <li>Tell us your preferred <a href="#tracks" class="font-semibold text-indigo-700 underline decoration-indigo-400/40 underline-offset-2">track</a> and why.</li>
+        <li>Send to <a href="mailto:talent@vinrobotics.vn" class="font-semibold text-indigo-700 underline decoration-indigo-400/40 underline-offset-2">talent@vinrobotics.vn</a> with subject “<em>PIR Talent Program — Your Name</em>”.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="mx-auto max-w-7xl px-6 py-14">
+    <h2 class="text-2xl font-bold">FAQ</h2>
+    <div class="mt-6 grid gap-5 lg:grid-cols-2">
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">Is this only about humanoids?</h3>
+        <p class="mt-2 text-sm text-slate-600">Humanoids are a key platform, but we also work on mobile manipulation, UAV perception, and autonomy — wherever physics & embodiment meet.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">Can I join remotely?</h3>
+        <p class="mt-2 text-sm text-slate-600">On‑site is preferred to get hands‑on hardware time. Hybrid is possible for strong candidates.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">What should I know before applying?</h3>
+        <p class="mt-2 text-sm text-slate-600">Basic linear algebra, calculus, and programming. Familiarity with robotics stacks (ROS, Pinocchio, CasADi, CUDA) helps.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">Who will mentor me?</h3>
+        <p class="mt-2 text-sm text-slate-600">Core leads plus external mentors (AI, UAV, SLAM). You’ll have a primary mentor and a weekly sync.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 py-10">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-sm text-slate-500">© <span id="y"></span> VinRobotics • Physical Intelligence for Robotics</p>
+        <nav class="flex flex-wrap gap-4 text-sm text-slate-600">
+          <a class="hover:underline" href="#tracks">Tracks</a>
+          <a class="hover:underline" href="#mentors">Mentors</a>
+          <a class="hover:underline" href="#apply">Apply</a>
+          <a class="hover:underline" href="#faq">FAQ</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
